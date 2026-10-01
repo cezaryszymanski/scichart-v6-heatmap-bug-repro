@@ -1,0 +1,17 @@
+{
+  "include": [
+      "./src/**/*"
+  ],
+  "compilerOptions": {
+      "strict": false,
+      "esModuleInterop": true,
+      "target": "es5",
+      "downlevelIteration": true,
+      "lib": [
+          "dom",
+          "es2015"
+      ],
+      "typeRoots": ["./src/types", "./node_modules/@types"],
+      "jsx": "react-jsx"
+  }
+}

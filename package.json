@@ -1,0 +1,1 @@
+{"name":"heatmap-chart","version":"1.0.0","main":"index.ts","scripts":{"start":"vite","build":"vite build"},"dependencies":{"scichart":"^6.0.1"},"devDependencies":{"typescript":"4.9.5","vite":"^8.3.2"},"keywords":["typescript","javascript","chart","scichart"]}

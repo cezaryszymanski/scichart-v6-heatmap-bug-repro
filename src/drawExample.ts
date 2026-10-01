@@ -21,19 +21,6 @@ const MODE = params.get("mode") === "fixed" ? "fixed" : "grow";
 const WIDTH = Number(params.get("width") ?? 2000);
 const ROWS = Number(params.get("rows") ?? 400);
 
-// Shmem in MB from the dev server (Linux only), undefined elsewhere
-let shmemMb: number | undefined;
-const pollShmem = async () => {
-    try {
-        const res = await fetch("/shmem");
-        shmemMb = res.ok ? Number(await res.text()) : undefined;
-    } catch {
-        shmemMb = undefined;
-    }
-};
-setInterval(pollShmem, 500);
-pollShmem();
-
 const makeRow = (seed: number) => {
     const row = new Array<number>(WIDTH);
     for (let x = 0; x < WIDTH; x++) {
@@ -103,12 +90,11 @@ export const drawExample = async (rootElement: string | HTMLDivElement, status: 
         const engineHeapMb = Math.round((wasmContext as any).HEAPU8.buffer.byteLength / 1024 / 1024);
         status.textContent =
             `mode=${MODE} cycle=${cycle} row=${row}/${ROWS} size=${WIDTH}x${dataSeries.arrayHeight} ` +
-            `engine heap=${engineHeapMb} MB` +
-            (shmemMb !== undefined ? ` shmem=${shmemMb} MB` : "");
+            `engine heap=${engineHeapMb} MB`;
 
         if (row >= ROWS) {
             endCycle();
-            console.log(`cycle ${cycle} done: engine heap=${engineHeapMb} MB shmem=${shmemMb ?? "n/a"} MB`);
+            console.log(`cycle ${cycle} done: engine heap=${engineHeapMb} MB`);
         }
         requestAnimationFrame(tick);
     };
